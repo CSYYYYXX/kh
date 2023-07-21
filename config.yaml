@@ -1,0 +1,48 @@
+cae_data:
+  data_path: "kh.npy"
+  batch_size: 32
+  time_size: 1786      # The numbers of the snapshots
+cae_optimizer:
+  lr: 0.001
+  weight_decay: 0.000001
+  epochs: 4400
+  save_ckpt_interval: 400
+  summary_dir: "./summary"      # The directory where the training process files are saved
+transformer:
+  enc_in: 20 
+  dec_in: 20
+  c_out: 1
+  pred_len: 1
+transformer_data:
+  pred_len: 1
+  seq_len: 100
+  label_len: 100
+  padding: 0
+  batch_size: 32
+  time_size: 1786
+  latent_size: 20
+  time_window: 100
+  gaussian_filter_sigma: 3
+transformer_optimizer:
+  lr: 0.001
+  weight_decay: 0.000001
+  epochs: 20
+  save_ckpt_interval: 400
+  summary_dir: "./summary"
+cae_model:
+  data_dimension: [256, 128, 64, 32, 16, 8]
+  conv_kernel_size: 3
+  maxpool_kernel_size: 2
+  maxpool_stride: 2
+  encoder_channels: [1, 40, 30, 20, 10, 5, 1]
+  decoder_channels: [1, 1, 5, 10, 20, 30, 40, 1]
+  channels_dense: [16, 30, 25, 20]
+  latent_size: 20
+prediction:
+  encoder_data_split: 4                                  # Split the dataset to reduce memory
+  encoder_time_spilt: [0, 500, 1000, 1500, 1786]
+  decoder_data_split: 4
+  decoder_time_spilt: [0, 500, 1000, 1500, 1786]
+  cae_ckpt_path: "./summary/ckpt/cae_3200.ckpt"
+  transformer_ckpt_path: "./summary/ckpt/Informer-1_52.ckpt"
+  prediction_result_dir: "./prediction_result"
